@@ -1156,21 +1156,22 @@ public class Program
 	{
 		return Math.Exp(x) - 1;
 	}
-	public static int CountSignFlips(YFunction yfunc, double a, double b, double h)
+	public static int CountSignFlips(YFunction y, double a, double b, double h)
 	{
-		int count = 1;
-		double lst = yfunc(a);
-		for (int i = 1; i < (b - a) / h + 1; i++)
-		{
-			double x = a + h * i;
-			if (lst * yfunc(x) < 0)
+        int cnt = 0;
+        double last_y = y(a);
+        for (double x = a + h; x <= b; x += h)
+        {
+            if (y(x) == 0) continue;
+            double now = y(x);
+			if (last_y * now < 0)
 			{
-				count++;
+				++cnt;
 			}
-			lst = yfunc(x);
-		}
-		return count;
-	}
+            last_y = now;
+        }
+        return cnt;
+    }
 
 
 	public void Task_3_6(int[,] matrix)
